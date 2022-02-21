@@ -1,0 +1,3 @@
+newmtl Cube
+    map_Kd cube.png
+    map_Ks cube.png

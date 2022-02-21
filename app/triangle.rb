@@ -1,10 +1,13 @@
 class Triangle
-  def initialize args, cam, v0, v1, v2, texture
+  def initialize args, cam, v0, v1, v2, texture, t0 = nil, t1 = nil, t2 = nil
     @args = args
     @cam = cam
     @v0 = Vec4.new(v0.x,v0.y,v0.z,1)
     @v1 = Vec4.new(v1.x,v1.y,v1.z,1)
     @v2 = Vec4.new(v2.x,v2.y,v2.z,1)
+    @t0 = t0
+    @t1 = t1
+    @t2 = t2
     @texture = texture
   end
 
@@ -31,7 +34,7 @@ class Triangle
     cross = c.dot(normal)
 
     if(cross < 0)
-      return
+      #return
     end
 
     return {
@@ -41,12 +44,12 @@ class Triangle
       y2: _v1.y,
       x3: _v2.x,
       y3: _v2.y,
-      path: "sprites/#{@texture}.png",
-      source_x:  0,
-      source_y:  0,
-      source_x2: 0,
-      source_y2: 0,
-      source_x3: 0,
-      source_y3: 0}
+      path: "models/cube.png",
+      source_x:  @t0.x * 1024,
+      source_y:  @t0.y * 1024,
+      source_x2: @t1.x * 1024,
+      source_y2: @t1.y * 1024,
+      source_x3: @t2.x * 1024,
+      source_y3: @t2.y * 1024}
   end
 end

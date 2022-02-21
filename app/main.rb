@@ -2,17 +2,18 @@ require '/app/include.rb'
 
 def init args
   @cam = Camera.new(60,1,1000,50,50,50)
+  @model = ObjLoader.new(args, "/models/cube.obj", @cam)
   @boxes = []
 
-  @boxes << Box.new(args,@cam,0,0,0)
-  @boxes << Box.new(args,@cam,2,0,0)
-  @boxes << Box.new(args,@cam,0,0,2)
-  @boxes << Box.new(args,@cam,2,0,2)
+  #@boxes << Box.new(args,@cam,0,0,0)
+  #@boxes << Box.new(args,@cam,2,0,0)
+  #@boxes << Box.new(args,@cam,0,0,2)
+  #@boxes << Box.new(args,@cam,2,0,2)
 
-  @boxes << Box.new(args,@cam,0,2,0)
-  @boxes << Box.new(args,@cam,2,2,0)
-  @boxes << Box.new(args,@cam,0,2,2)
-  @boxes << Box.new(args,@cam,2,2,2)
+  #@boxes << Box.new(args,@cam,0,2,0)
+  #@boxes << Box.new(args,@cam,2,2,0)
+  #@boxes << Box.new(args,@cam,0,2,2)
+  #@boxes << Box.new(args,@cam,2,2,2)
 
 end
 
@@ -36,6 +37,7 @@ def tick args
   triangles = []
 
   # get all
+=begin
   i = 0
   while i < sprites.size
     k = 0
@@ -47,14 +49,17 @@ def tick args
     end
     i += 1
   end
+=end
+
+  triangles = @model.get
 
   # sort
-  triangles = triangles.sort_by { |k| k[:dist]}
+  triangles = triangles.sort_by { |k| Vec3.new(@cam.x,@cam.y,@cam.z).sub!(k.mid).length}
 
   # draw
   i = 0
   while i < triangles.size
-    args.outputs.sprites << triangles[i][:data].draw
+    args.outputs.sprites << triangles[i].draw
     i += 1
   end
 end
